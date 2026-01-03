@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome Page</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            max-width: 600px;
+            width: 100%;
+            text-align: center;
+        }
+
+        .heading {
+            font-size: 36px;
+            font-weight: 700;
+            margin-bottom: 25px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 2px 2px 4px rgba(255, 215, 0, 0.3);
+        }
+
+        .logo-space {
+            width: 200px;
+            height: 200px;
+            margin: 0 auto 30px;
+            background: white;
+            border-radius: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+            overflow: hidden;
+            padding: 15px;
+        }
+
+        .logo-space img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .message {
+            font-size: 28px;
+            margin-bottom: 30px;
+            font-weight: 600;
+            line-height: 1.4;
+            background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .visitor-counter {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            padding: 20px 30px;
+            border-radius: 15px;
+            display: inline-block;
+            box-shadow: 0 8px 20px rgba(245, 87, 108, 0.3);
+        }
+
+        .visitor-counter .label {
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 8px;
+            opacity: 0.9;
+        }
+
+        .visitor-counter .count {
+            font-size: 36px;
+            font-weight: bold;
+        }
+
+        .datetime-display {
+            margin-top: 30px;
+            padding: 25px;
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            border-radius: 15px;
+            color: white;
+            box-shadow: 0 8px 20px rgba(79, 172, 254, 0.3);
+        }
+
+        .datetime-label {
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 12px;
+            opacity: 0.9;
+        }
+
+        .date {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .time {
+            font-size: 32px;
+            font-weight: bold;
+            font-family: 'Courier New', monospace;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 30px 20px;
+            }
+
+            .heading {
+                font-size: 26px;
+            }
+
+            .message {
+                font-size: 22px;
+            }
+
+            .logo-space {
+                width: 150px;
+                height: 150px;
+            }
+
+            .visitor-counter .count {
+                font-size: 28px;
+            }
+
+            .datetime-display {
+                padding: 20px;
+            }
+
+            .date {
+                font-size: 18px;
+            }
+
+            .time {
+                font-size: 24px;
+            }
+        }
+
+        @media (max-width: 400px) {
+            .container {
+                padding: 20px 15px;
+            }
+
+            .heading {
+                font-size: 20px;
+                margin-bottom: 15px;
+            }
+
+            .logo-space {
+                width: 120px;
+                height: 120px;
+                margin-bottom: 20px;
+            }
+
+            .message {
+                font-size: 18px;
+                margin-bottom: 20px;
+            }
+
+            .visitor-counter {
+                padding: 15px 20px;
+            }
+
+            .visitor-counter .label,
+            .datetime-label {
+                font-size: 12px;
+            }
+
+            .visitor-counter .count {
+                font-size: 24px;
+            }
+
+            .datetime-display {
+                margin-top: 20px;
+                padding: 15px;
+            }
+
+            .date {
+                font-size: 16px;
+            }
+
+            .time {
+                font-size: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="heading">Kalyan Centenary Year</h1>
+        
+        <div class="logo-space">
+            <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==" alt="Gita Press Logo" id="logoImage">
+        </div>
+        
+        <div class="message">
+            Welcome to Kalyan<br>
+            Est. 1926
+        </div>
+        
+        <div class="visitor-counter">
+            <div class="label">Visitor ID</div>
+            <div class="count" id="visitorCount">0</div>
+        </div>
+        
+        <div class="datetime-display">
+            <div class="datetime-label">Your Visit</div>
+            <div class="date" id="currentDate"></div>
+            <div class="time" id="currentTime"></div>
+        </div>
+    </div>
+
+    <script>
+        // Visitor counter stored in memory
+        let visitorCount = 0;
+
+        // Function to initialize and update visitor count
+        function updateVisitorCount() {
+            visitorCount++;
+            document.getElementById('visitorCount').textContent = visitorCount.toLocaleString();
+        }
+
+        // Function to update date and time
+        function updateDateTime() {
+            const now = new Date();
+            
+            // Format date
+            const dateOptions = { 
+                weekday: 'long', 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric' 
+            };
+            const dateString = now.toLocaleDateString('en-US', dateOptions);
+            document.getElementById('currentDate').textContent = dateString;
+            
+            // Format time
+            const timeString = now.toLocaleTimeString('en-US', {
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit'
+            });
+            document.getElementById('currentTime').textContent = timeString;
+        }
+
+        // Initialize counter and datetime on page load (capture once)
+        updateVisitorCount();
+        updateDateTime();
+    </script>
+</body>
+</html>
