@@ -244,44 +244,14 @@
     </div>
 
     <script>
-        // Function to initialize and update visitor count with persistence
-        async function updateVisitorCount() {
-            console.log('Updating visitor count...');
-            console.log('Storage API available:', typeof window.storage !== 'undefined');
-            
-            try {
-                // Check if storage API is available
-                if (typeof window.storage === 'undefined') {
-                    console.error('Storage API not available');
-                    document.getElementById('visitorCount').textContent = '1';
-                    return;
-                }
-                
-                // Try to get existing count
-                let visitorCount = 1;
-                try {
-                    const result = await window.storage.get('kalyan_visitor_count');
-                    console.log('Retrieved from storage:', result);
-                    if (result && result.value) {
-                        visitorCount = parseInt(result.value) + 1;
-                    }
-                } catch (error) {
-                    // Key doesn't exist yet, start at 1
-                    console.log('Key not found, starting at 1:', error);
-                }
-                
-                console.log('New visitor count:', visitorCount);
-                
-                // Save updated count
-                const saveResult = await window.storage.set('kalyan_visitor_count', visitorCount.toString());
-                console.log('Saved to storage:', saveResult);
-                
-                // Display count
-                document.getElementById('visitorCount').textContent = visitorCount.toLocaleString();
-            } catch (error) {
-                console.error('Error updating visitor count:', error);
-                document.getElementById('visitorCount').textContent = '1';
-            }
+        // In-memory visitor counter (resets on page reload)
+        let visitorCount = 0;
+
+        // Function to initialize and update visitor count
+        function updateVisitorCount() {
+            visitorCount++;
+            document.getElementById('visitorCount').textContent = visitorCount.toLocaleString();
+            console.log('Visitor count updated to:', visitorCount);
         }
 
         // Function to update date and time
@@ -312,21 +282,16 @@
         updateDateTime();
         
         // Test function to manually increment counter
-        async function testCounter() {
-            await updateVisitorCount();
-            alert('Counter incremented! Check the display.');
+        function testCounter() {
+            updateVisitorCount();
+            alert('Counter incremented! Now showing: ' + visitorCount);
         }
         
         // Reset counter function
-        async function resetCounter() {
-            try {
-                await window.storage.delete('kalyan_visitor_count');
-                console.log('Counter reset');
-                document.getElementById('visitorCount').textContent = '0';
-                alert('Counter reset! Refresh the page to start from 1.');
-            } catch (error) {
-                console.error('Error resetting counter:', error);
-            }
+        function resetCounter() {
+            visitorCount = 0;
+            document.getElementById('visitorCount').textContent = '0';
+            alert('Counter reset to 0!');
         }
     </script>
 </body>
