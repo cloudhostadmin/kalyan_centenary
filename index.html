@@ -236,13 +236,30 @@
     </div>
 
     <script>
-        // Visitor counter stored in memory
-        let visitorCount = 0;
-
-        // Function to initialize and update visitor count
-        function updateVisitorCount() {
-            visitorCount++;
-            document.getElementById('visitorCount').textContent = visitorCount.toLocaleString();
+        // Function to initialize and update visitor count with persistence
+        async function updateVisitorCount() {
+            try {
+                // Try to get existing count
+                let visitorCount = 1;
+                try {
+                    const result = await window.storage.get('kalyan_visitor_count');
+                    if (result && result.value) {
+                        visitorCount = parseInt(result.value) + 1;
+                    }
+                } catch (error) {
+                    // Key doesn't exist yet, start at 1
+                    console.log('Starting new visitor count');
+                }
+                
+                // Save updated count
+                await window.storage.set('kalyan_visitor_count', visitorCount.toString());
+                
+                // Display count
+                document.getElementById('visitorCount').textContent = visitorCount.toLocaleString();
+            } catch (error) {
+                console.error('Error updating visitor count:', error);
+                document.getElementById('visitorCount').textContent = '1';
+            }
         }
 
         // Function to update date and time
@@ -268,7 +285,7 @@
             document.getElementById('currentTime').textContent = timeString;
         }
 
-        // Initialize counter and datetime on page load (capture once)
+        // Initialize counter and datetime on page load
         updateVisitorCount();
         updateDateTime();
     </script>
