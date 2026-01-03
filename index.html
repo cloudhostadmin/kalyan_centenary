@@ -233,26 +233,48 @@
             <div class="date" id="currentDate"></div>
             <div class="time" id="currentTime"></div>
         </div>
+        
+        <button onclick="testCounter()" style="margin-top: 20px; padding: 12px 24px; background: #667eea; color: white; border: none; border-radius: 10px; font-size: 16px; cursor: pointer; font-weight: 600;">
+            Test Counter
+        </button>
+        
+        <button onclick="resetCounter()" style="margin-top: 10px; padding: 12px 24px; background: #f5576c; color: white; border: none; border-radius: 10px; font-size: 16px; cursor: pointer; font-weight: 600;">
+            Reset Counter
+        </button>
     </div>
 
     <script>
         // Function to initialize and update visitor count with persistence
         async function updateVisitorCount() {
+            console.log('Updating visitor count...');
+            console.log('Storage API available:', typeof window.storage !== 'undefined');
+            
             try {
+                // Check if storage API is available
+                if (typeof window.storage === 'undefined') {
+                    console.error('Storage API not available');
+                    document.getElementById('visitorCount').textContent = '1';
+                    return;
+                }
+                
                 // Try to get existing count
                 let visitorCount = 1;
                 try {
                     const result = await window.storage.get('kalyan_visitor_count');
+                    console.log('Retrieved from storage:', result);
                     if (result && result.value) {
                         visitorCount = parseInt(result.value) + 1;
                     }
                 } catch (error) {
                     // Key doesn't exist yet, start at 1
-                    console.log('Starting new visitor count');
+                    console.log('Key not found, starting at 1:', error);
                 }
                 
+                console.log('New visitor count:', visitorCount);
+                
                 // Save updated count
-                await window.storage.set('kalyan_visitor_count', visitorCount.toString());
+                const saveResult = await window.storage.set('kalyan_visitor_count', visitorCount.toString());
+                console.log('Saved to storage:', saveResult);
                 
                 // Display count
                 document.getElementById('visitorCount').textContent = visitorCount.toLocaleString();
@@ -288,6 +310,24 @@
         // Initialize counter and datetime on page load
         updateVisitorCount();
         updateDateTime();
+        
+        // Test function to manually increment counter
+        async function testCounter() {
+            await updateVisitorCount();
+            alert('Counter incremented! Check the display.');
+        }
+        
+        // Reset counter function
+        async function resetCounter() {
+            try {
+                await window.storage.delete('kalyan_visitor_count');
+                console.log('Counter reset');
+                document.getElementById('visitorCount').textContent = '0';
+                alert('Counter reset! Refresh the page to start from 1.');
+            } catch (error) {
+                console.error('Error resetting counter:', error);
+            }
+        }
     </script>
 </body>
 </html>
