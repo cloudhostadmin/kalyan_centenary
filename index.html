@@ -224,8 +224,8 @@
         </div>
         
         <div class="visitor-counter">
-            <div class="label">Visitor ID</div>
-            <div class="count" id="visitorCount">1</div>
+            <div class="label">Visitor Count</div>
+            <div class="count" id="visitorCount">0</div>
         </div>
         
         <div class="datetime-display">
@@ -236,9 +236,44 @@
     </div>
 
     <script>
-        // Generate a random visitor ID for this session
-        const visitorId = Math.floor(Math.random() * 900000) + 100000;
-        document.getElementById('visitorCount').textContent = visitorId.toLocaleString();
+        // Cookie utility functions
+        function setCookie(name, value, days) {
+            const expires = new Date();
+            expires.setTime(expires.getTime() + (days * 24 * 60 * 60 * 1000));
+            document.cookie = name + '=' + value + ';expires=' + expires.toUTCString() + ';path=/';
+        }
+
+        function getCookie(name) {
+            const nameEQ = name + '=';
+            const ca = document.cookie.split(';');
+            for (let i = 0; i < ca.length; i++) {
+                let c = ca[i];
+                while (c.charAt(0) === ' ') c = c.substring(1, c.length);
+                if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length, c.length);
+            }
+            return null;
+        }
+
+        // Function to update visitor count with cookie persistence
+        function updateVisitorCount() {
+            let visitorCount = getCookie('kalyan_visitor_count');
+            
+            if (visitorCount === null) {
+                // First visit
+                visitorCount = 1;
+            } else {
+                // Increment the count
+                visitorCount = parseInt(visitorCount) + 1;
+            }
+            
+            // Save to cookie (expires in 365 days)
+            setCookie('kalyan_visitor_count', visitorCount, 365);
+            
+            // Display the count
+            document.getElementById('visitorCount').textContent = visitorCount.toLocaleString();
+            
+            console.log('Visitor count updated to:', visitorCount);
+        }
 
         // Function to update date and time
         function updateDateTime() {
@@ -263,7 +298,8 @@
             document.getElementById('currentTime').textContent = timeString;
         }
 
-        // Initialize datetime on page load
+        // Initialize on page load
+        updateVisitorCount();
         updateDateTime();
     </script>
 </body>
