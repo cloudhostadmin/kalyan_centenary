@@ -225,7 +225,7 @@
         
         <div class="visitor-counter">
             <div class="label">Visitor ID</div>
-            <div class="count" id="visitorCount">0</div>
+            <div class="count" id="visitorCount">1</div>
         </div>
         
         <div class="datetime-display">
@@ -233,26 +233,12 @@
             <div class="date" id="currentDate"></div>
             <div class="time" id="currentTime"></div>
         </div>
-        
-        <button onclick="testCounter()" style="margin-top: 20px; padding: 12px 24px; background: #667eea; color: white; border: none; border-radius: 10px; font-size: 16px; cursor: pointer; font-weight: 600;">
-            Test Counter
-        </button>
-        
-        <button onclick="resetCounter()" style="margin-top: 10px; padding: 12px 24px; background: #f5576c; color: white; border: none; border-radius: 10px; font-size: 16px; cursor: pointer; font-weight: 600;">
-            Reset Counter
-        </button>
     </div>
 
     <script>
-        // In-memory visitor counter (resets on page reload)
-        let visitorCount = 0;
-
-        // Function to initialize and update visitor count
-        function updateVisitorCount() {
-            visitorCount++;
-            document.getElementById('visitorCount').textContent = visitorCount.toLocaleString();
-            console.log('Visitor count updated to:', visitorCount);
-        }
+        // Generate a random visitor ID for this session
+        const visitorId = Math.floor(Math.random() * 900000) + 100000;
+        document.getElementById('visitorCount').textContent = visitorId.toLocaleString();
 
         // Function to update date and time
         function updateDateTime() {
@@ -277,22 +263,8 @@
             document.getElementById('currentTime').textContent = timeString;
         }
 
-        // Initialize counter and datetime on page load
-        updateVisitorCount();
+        // Initialize datetime on page load
         updateDateTime();
-        
-        // Test function to manually increment counter
-        function testCounter() {
-            updateVisitorCount();
-            alert('Counter incremented! Now showing: ' + visitorCount);
-        }
-        
-        // Reset counter function
-        function resetCounter() {
-            visitorCount = 0;
-            document.getElementById('visitorCount').textContent = '0';
-            alert('Counter reset to 0!');
-        }
     </script>
 </body>
 </html>
